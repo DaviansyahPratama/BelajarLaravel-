@@ -24,7 +24,7 @@
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="mb-3 mb-lg-0">
                 <h1 class="h4">Data User</h1>
-                <p class="mb-0">List data seluruh user</p>
+                <p class="mb-0">List data</p>
             </div>
             <div>
                 <a href="{{ route('user.create') }}" class="btn btn-success text-white">
