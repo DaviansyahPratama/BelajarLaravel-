@@ -41,8 +41,8 @@
     <form action="/auth/login" method="POST">
         @csrf
         <div class="mb-3">
-            <label class="form-label">Username</label>
-            <input type="text" name="username" class="form-control" placeholder="Masukkan username" required>
+            <label class="form-label">Email</label>
+            <input type="text" name="email" class="form-control" placeholder="Masukkan email" required>
         </div>
 
         <div class="mb-3">

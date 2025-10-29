@@ -5,6 +5,11 @@
 @section('content')
     {{-- Content --}}
     <div class="py-4">
+         @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @elseif (session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
             <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
                 <li class="breadcrumb-item">

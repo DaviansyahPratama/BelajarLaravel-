@@ -8,7 +8,7 @@
                             class="card-img-top rounded-circle border-white" alt="Bonnie Green">
                     </div>
                     <div class="d-block">
-                        <h2 class="h5 mb-3">Hi, Rajif</h2>
+                        <h2 class="h5 mb-3">Hi, Dapi</h2>
                         <a href="../../pages/examples/sign-in.html"
                             class="btn btn-secondary btn-sm d-inline-flex align-items-center">
                             <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -43,7 +43,7 @@
                         <span class="mt-1 ms-1 sidebar-text">Volt Overview</span>
                     </a>
                 </li>
-                <li class="nav-item  active ">
+                <li class="nav-item {{ request()->routeIs('pelanggan.*') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <span class="sidebar-icon">
                             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
