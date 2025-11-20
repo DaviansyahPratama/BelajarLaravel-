@@ -37,6 +37,48 @@
                 <div class="card border-0 shadow mb-4">
                     <div class="card-body">
                         <div class="table-responsive">
+                            <div class="table-responsive">
+      <form method="GET" action="{{ route('pelanggan.index') }}" class="mb-3">
+    <div class="row">
+        <div class="col-md-2">
+            <select name="gender" class="form-select" onchange="this.form.submit()">
+                <option value="">All</option>
+                <option value="male" {{ request('gender')=='male' ? 'selected' : '' }}>Male</option>
+                <option value="female" {{ request('gender')=='female' ? 'selected' : '' }}>Female</option>
+            </select>
+        </div>
+
+      <!-- Input Search -->
+        <div class="col-md-3">
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    class="form-control"
+                    placeholder="Search...">
+
+                <!-- Tombol Clear -->
+                @if(request('search'))
+                    <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}"
+                       class="btn btn-outline-secondary"
+                       id="clear-search">
+                       Clear
+                    </a>
+                @endif
+            </div>
+        </div>
+          <!-- Tombol Submit Search -->
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+
+    </div>
+</form>
+
+    </div>
+</form>
+
                             <table id="table-pelanggan" class="table table-centered table-nowrap mb-0 rounded">
                                 <thead class="thead-light">
                                     <tr>
@@ -50,8 +92,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($dataPelanggan as $item)
+                                    @foreach ($dataPelanggan as $index => $item)
                                         <tr>
+                                            <td>{{($dataPelanggan->firstitem())+$index}}</td>
                                             <td>{{ $item->first_name }}</td>
                                             <td>{{ $item->last_name }}</td>
                                             <td>{{ $item->birthday }}</td>
@@ -88,9 +131,19 @@
                                             </td>
 
                                         </tr>
+
+
+
+
                                     @endforeach
                                 </tbody>
                             </table>
+                             <div class="mt-3">
+        {{-- {{ $dataPelanggan->links('pagination::bootstrap-5') }} --}}
+        {{ $dataPelanggan->links('pagination::simple-bootstrap-5') }}
+
+    </div>
+
                         </div>
                     </div>
                 </div>
