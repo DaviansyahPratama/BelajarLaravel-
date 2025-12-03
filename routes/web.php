@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MultipleuploadsController;
 
 // halaman guest
 Route::middleware('guest')->group(function () {
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('pelanggan', PelangganController::class);
     });
 });
+Route::get('/multipleuploads', [MultipleuploadsController::class, 'index'])->name('uploads');
+Route::post('/save', [MultipleuploadsController::class, 'store'])->name('uploads.store');
 
  Route::get('/', function () {
      return view('welcome');
