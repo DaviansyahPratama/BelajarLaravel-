@@ -2,55 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    /**
-     * 
-     */
     public function index()
     {
-        return view('login');
+        return view('auth.login');
     }
 
-    /**
-     * 
-     */
     public function login(Request $request)
     {
-        $request->validate([
+        $input = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
-        ], [
-            'email.required' => 'Email wajib diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'password.required' => 'Password wajib diisi.'
+            'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user) {
-            return back()->with('error', 'Email tidak ditemukan.');
+        if (Auth::attempt($input)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard'); // Arahkan User Biasa
         }
 
-        if (!Hash::check($request->password, $user->password)) {
-            return back()->with('error', 'Password salah.');
-        }
-
-        session(['user_id' => $user->id, 'user_name' => $user->name]);
-
-        return redirect()->route('dashboard')->with('success', 'Selamat datang, ' . $user->name . '!');
+        // Jika login Gagal
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ]);
     }
 
-    /**
-     * 
-     */
-    public function logout()
+    // 3. Proses Logout
+    public function logout(Request $request)
     {
-        session()->flush();
-        return redirect()->route('login')->with('success', 'Anda telah logout.');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }

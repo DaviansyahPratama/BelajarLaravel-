@@ -11,6 +11,39 @@ use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\UserController;
 
+// halaman guest
+Route::middleware('guest')->group(function () {
+    // Halaman Form Login
+    Route::get('/auth', [AuthController::class, 'index'])->name('login');
+
+    // Proses Submit Login
+    Route::post('/auth/login', [AuthController::class, 'login'])->name('login.process');
+
+    // Halaman Depan
+    Route::get('/', function () {
+        return view('welcome');
+    });
+});
+
+// halaman wajib login
+Route::middleware('auth')->group(function () {
+
+    // Logout (Bisa diakses semua user yang login)
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // -- DASHBOARD UNTUK USER BIASA --
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Fitur User Biasa (Contoh: Kirim Pertanyaan)
+    Route::post('question/store', [QuestionController::class, 'store'])->name('question.store');
+    Route::get('home', [HomeController::class, 'index']);
+
+    // Khusus admin
+    Route::middleware(['role:admin'])->prefix('admin')->group(function () {
+        Route::resource('user', UserController::class);
+        Route::resource('pelanggan', PelangganController::class);
+    });
+});
 
  Route::get('/', function () {
      return view('welcome');
@@ -40,23 +73,23 @@ use App\Http\Controllers\UserController;
 
 // Route::get('/matakuliah/{param1?}', [MataKuliahController::class, 'show']);
 
- Route::get('/home', [HomeController::class, 'index'])->name('home');
+//  Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::post('question/store', [QuestionController::class, 'store'])
-		->name('question.store');
+// Route::post('question/store', [QuestionController::class, 'store'])
+// 		->name('question.store');
 
- Route::get('/pegawai', [PegawaiController::class, 'index']);
+//  Route::get('/pegawai', [PegawaiController::class, 'index']);
 
-Route::get('/auth', [AuthController::class, 'index']);
-Route::post('/auth/login', [AuthController::class, 'login']);
+// Route::get('/auth', [AuthController::class, 'index']);
+// Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::get('dashboard', [DashBoardController::class, 'index'])->name('dashboard');
+// Route::get('dashboard', [DashBoardController::class, 'index'])->name('dashboard');
 
-Route::resource('pelanggan', PelangganController::class);
-Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])->name('pelanggan.edit');
-Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
+// Route::resource('pelanggan', PelangganController::class);
+// Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])->name('pelanggan.edit');
+// Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
 
-Route::resource('user', UserController::class);
-Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+// Route::resource('user', UserController::class);
+// Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+// Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
 
