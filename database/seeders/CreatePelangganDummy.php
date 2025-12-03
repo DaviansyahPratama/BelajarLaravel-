@@ -1,6 +1,9 @@
 <?php
 
 namespace Database\Seeders;
+
+
+
 use Faker\Factory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -11,7 +14,9 @@ class CreatePelangganDummy extends Seeder
     /**
      * Run the database seeds.
      */
+
     public function run(){
+
     $faker = \Faker\Factory::create();
 
     foreach (range(1, 100) as $index) {
